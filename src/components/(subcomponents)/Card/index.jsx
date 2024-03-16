@@ -1,7 +1,7 @@
-import Download from "../../../../assets/download.png";
-import { downloadImage } from "../../../utils/RandomPropts";
+import Download from "../../../assets/download.png";
+import downloadImage from "../../../utils";
 
-const Card = ({ _id, name, prompt, photo }) => (
+const Card = (_id, name, prompt, photo) => (
   <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
     <img
       className="w-full h-auto object-contain rounded-xl"

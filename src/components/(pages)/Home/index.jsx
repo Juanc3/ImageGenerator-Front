@@ -1,20 +1,13 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Card from "../../(subcomponents)/Card";
 import FormField from "../../(subcomponents)/FormField";
 import Loader from "../../(subcomponents)/Loader";
-import Card from "../../(subcomponents)/Card";
-import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0) {
-    return data.map((post: { _id: any }) => (
-      <Card
-        name={undefined}
-        prompt={undefined}
-        photo={undefined}
-        key={post._id}
-        {...post}
-      />
-    ));
+    return data.map((post) => <Card key={post._id} {...post} />);
   }
 
   return (
@@ -43,7 +36,9 @@ const Home = () => {
         const result = response.data;
         setAllPosts(result.data.reverse());
       }
+      toast.success("The posts are here");
     } catch (err) {
+      toast.error("An error has apper");
       console.log(err);
     } finally {
       setLoading(false);
@@ -54,16 +49,14 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  const handleSearchChange = (e: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const handleSearchChange = (e) => {
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
     setSearchTimeout(
       setTimeout(() => {
         const searchResult = allPosts.filter(
-          (item: { name: string; prompt: string }) =>
+          (item) =>
             item.name.toLowerCase().includes(searchText.toLowerCase()) ||
             item.prompt.toLowerCase().includes(searchText.toLowerCase())
         );
@@ -74,6 +67,7 @@ const Home = () => {
 
   return (
     <section className="max-w-6xl mx-auto">
+      <Toaster />
       <div>
         <h1 className="font-extrabold text-[#222328] text-[32px]">
           The Community Showcase
