@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormField from "../../(subcomponents)/FormField";
-import Loader from "../../(subcomponents)/Loader";
-import Preview from "../../../../assets/preview.png";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import FormField from "../../(subcomponents)/FormField";
+import Loader from "../../(subcomponents)/Loader";
+import Preview from "../../../assets/preview.png";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: { target: { name: any; value: any } }) =>
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const generateImage = async () => {
@@ -36,7 +36,7 @@ const CreatePost = () => {
     }
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.prompt && form.photo && form.name) {
       setLoading(true);

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import CreatePost from "./pages/CreatePost";
-import Header from "./components/(subcomponents)/Header";
+import Header from "../components/(subcomponents)/Header";
+import Home from "../components/(pages)/Home";
+import CreatePost from "../components/(pages)/CreatePost";
 
 function App() {
   return (
