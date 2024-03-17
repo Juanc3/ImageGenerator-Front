@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { GetImages, SendPost } from "../../../functions";
 import FormField from "../../(subcomponents)/FormField";
 import Loader from "../../(subcomponents)/Loader";
 import Preview from "../../../assets/preview.png";
@@ -24,10 +24,12 @@ const CreatePost = () => {
   const generateImage = async () => {
     try {
       setGeneratingImg(true);
-      const response = await axios.get("http://localhost:3005/api/images");
-      const image = response.data.image;
-      setForm({ ...form, photo: image });
-      toast.success("Image Generated");
+      const res = await GetImages();
+      if (res.status === 200) {
+        const image = res.data.image;
+        setForm({ ...form, photo: image });
+        toast.success("Image Generated");
+      }
     } catch (err) {
       toast.error("An error has apper");
       console.error(err);
@@ -41,20 +43,14 @@ const CreatePost = () => {
     if (form.prompt && form.photo && form.name) {
       setLoading(true);
       try {
-        const response = await axios.post(
-          "http://localhost:3005/api/post",
-          form,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        toast.success("Success");
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-        return response;
+        const res = await SendPost(form);
+        if (res.status === 200) {
+          toast.success("Success");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+          return res;
+        }
       } catch (err) {
         toast.error("An error has appeared");
         console.log(err);
