@@ -18,8 +18,19 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const validateInput = (inputValue) => {
+      const regex = /^[a-zA-Z0-9\s]*$/; // Expresión regular para permitir solo letras, números y espacios
+      if (!regex.test(inputValue)) {
+        toast.error("No se permiten caracteres especiales en este campo.");
+        return inputValue.replace(/[^a-zA-Z0-9\s]/g, "");
+      }
+      return inputValue;
+    };
+    const newValue = validateInput(value);
+    setForm({ ...form, [name]: newValue });
+  };
 
   const generateImage = async () => {
     try {
@@ -106,7 +117,7 @@ const CreatePost = () => {
               {generatingImg ? "Generating..." : "Generate"}
             </button>
           </div>
-          {form?.photo && (
+          {form.photo && (
             <>
               <FormField
                 labelName="Image Description"
@@ -115,6 +126,8 @@ const CreatePost = () => {
                 placeholder="An Impressionist oil painting of sunflowers in a purple vase…"
                 value={form.prompt}
                 handleChange={handleChange}
+                maxLength={40}
+                minLength={8}
               />
               <FormField
                 labelName="Your Name"
@@ -123,6 +136,8 @@ const CreatePost = () => {
                 placeholder="Ex., john doe"
                 value={form.name}
                 handleChange={handleChange}
+                maxLength={8}
+                minLength={3}
               />
             </>
           )}
