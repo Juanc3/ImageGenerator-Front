@@ -28,14 +28,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const localData = localStorage.getItem("datos");
-    if (localData) {
-      setAllPosts(JSON.parse(localData));
-    } else {
+    if (allPosts) {
       GetPosts();
     }
-    const intervalId = setInterval(GetPosts(), 60000); // 1 minuto
-    return () => clearInterval(intervalId);
   }, []);
 
   return (

@@ -5,6 +5,8 @@ const FormField = ({
   placeholder,
   value,
   handleChange,
+  minLength,
+  maxLength,
 }) => (
   <div>
     <div className="flex items-center gap-2 mb-2">
@@ -20,6 +22,8 @@ const FormField = ({
       placeholder={placeholder}
       value={value}
       onChange={handleChange}
+      minLength={minLength}
+      maxLength={maxLength}
       required
     />
   </div>
