@@ -15,8 +15,9 @@ const Home = () => {
       const res = await GetAllPosts();
       if (res.status === 200) {
         const result = res.data;
-        setAllPosts(result.data.reverse());
-        localStorage.setItem("datos", JSON.stringify(allPosts));
+        const posts = result.data.reverse();
+        setAllPosts(posts);
+        localStorage.setItem("datos", JSON.stringify(posts));
       }
     } catch (err) {
       console.log(err);
