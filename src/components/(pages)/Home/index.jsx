@@ -8,6 +8,7 @@ import Download from "../../../assets/download.png";
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const GetPosts = async () => {
     setLoading(true);
@@ -28,10 +29,24 @@ const Home = () => {
     setLoading(false);
   };
 
+  const toggleFavorite = (post) => {
+    const exists = favorites.find((fav) => fav._id === post._id);
+    let updatedFavorites;
+    if (exists) {
+      updatedFavorites = favorites.filter((fav) => fav._id !== post._id);
+    } else {
+      updatedFavorites = [...favorites, post];
+    }
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
+
   useEffect(() => {
     if (allPosts) {
       GetPosts();
     }
+    const storedFavs = JSON.parse(localStorage.getItem("favorites")) || [];
+    setFavorites(storedFavs);
   }, []);
 
   return (
@@ -77,17 +92,26 @@ const Home = () => {
                         </div>
                         <p className="text-white text-sm">{post.name}</p>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => downloadImage(post._id, post.photo)}
-                        className="outline-none bg-transparent border-none"
-                      >
-                        <img
-                          src={Download}
-                          alt="download"
-                          className="w-6 h-6 object-contain invert"
-                        />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => toggleFavorite(post)}
+                          className="outline-none bg-transparent border-none text-white text-xl"
+                        >
+                          {favorites.find((fav) => fav._id === post._id) ? "♥" : "♡"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => downloadImage(post._id, post.photo)}
+                          className="outline-none bg-transparent border-none"
+                        >
+                          <img
+                            src={Download}
+                            alt="download"
+                            className="w-6 h-6 object-contain invert"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
