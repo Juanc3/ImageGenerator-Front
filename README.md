@@ -1,8 +1,27 @@
-# React + Vite
+# Image Generator Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project provides a React-based interface for generating images through an API. Users can submit prompts and download the resulting images.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Configure the API endpoint. Copy `.env.example` to `.env` and set `VITE_IMAGE_GENERATOR_API` with the URL of your backend:
+   ```bash
+   VITE_IMAGE_GENERATOR_API=http://localhost:3005
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Build
+
+Create a production build with:
+```bash
+npm run build
+```
