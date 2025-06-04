@@ -20,7 +20,7 @@ const Home = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("An error has apper");
+      toast.error("An error has appeared");
       setLoading(false);
       return;
     }

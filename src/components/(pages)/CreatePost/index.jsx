@@ -42,7 +42,7 @@ const CreatePost = () => {
         toast.success("Image Generated");
       }
     } catch (err) {
-      toast.error("An error has apper");
+      toast.error("An error has appeared");
       console.error(err);
     } finally {
       setGeneratingImg(false);
